@@ -1,0 +1,14 @@
+feign:
+  client:
+    config:
+      default:
+        # 连接超时时间
+        connectTimeout: 5000
+        # 读超时时间
+        readTimeout: 5000
+        # 日志级别
+        loggerLevel: full
+spring:
+  profiles:
+    #与Consul的Key/Value的 config/consul-service,pro/data对应
+    active: pro

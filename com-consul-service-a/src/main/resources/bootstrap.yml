@@ -1,0 +1,28 @@
+#经过验证，配置中心默认加载bootstrap.(yml|yaml|properties)配置文件,不能加载application.(yml|yaml|properties)配置文件
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        # 启用consul的配置中心功能，默认是true
+        enabled: true
+        # 表示consul上面文件的格式 有四种 YAML PROPERTIES KEY-VALUE FILES，默认是KEY-VALUE
+        format: YAML
+        # 配置基本文件，默认值config
+        # 与Consul的Key/Value的 config/consul-service,dev/data对应
+        prefix: config
+        #默认节点名称，在 consul 上的应用名字，默认是 spring.application.name
+        default-context: consul-service
+        #表示consul上面的配置文件名,与Consul的Key/Value的 config/consul-service,pro/data对应
+        data-key: data
+        # Consul开启ACL权限控制后 配置文件Key/Value获取都需要带指定的token
+        acl-token: 5cb27e3a-bffa-cb5a-a457-4ffe1bad2643
+        # watch选项为配置监视功能，主要监视配置的改变
+        watch:
+          # 启用配置自动刷新，默认 true
+          enabled: true
+          # 刷新频率，单位毫秒，默认 1000
+          delay: 10000
+          # 查询等待的时间，单位秒，默认 55
+          wait-time: 30

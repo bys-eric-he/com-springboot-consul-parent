@@ -1,0 +1,43 @@
+server:
+  port: 8092
+spring:
+  application:
+    #与Consul的Key/Value的 config/consul-service,pro/data对应
+    name: consul-service
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        # 启用服务发现
+        enabled: true
+        # 启用服务注册
+        register: true
+        # 服务停止时取消注册
+        deregister: true
+        # 表示注册时使用IP而不是hostname
+        prefer-ip-address: true
+        # 执行监控检查的频率
+        health-check-interval: 30s
+        # 设置健康检查失败多长时间后，取消注册
+        health-check-critical-timeout: 30s
+        # 开启心跳检测
+        heartbeat:
+          # 如果要开启ACL权限访问控制就需要关闭心跳检测,让consul使用自己的健康检测机制
+          enabled: false
+        # 健康检查的路径
+        # 如果要开启ACL权限访问控制 就不能用/actuator/info检测路径
+        health-check-path: /actuator/health
+        # 服务注册标识，实例唯一 ID 格式为：应用名称+服务器IP+端口
+        instance-id: ${spring.application.name}:${spring.cloud.client.ipaddress}:${server.port}
+        # Consul开启ACL权限控制后 服务的注册和获取都需要带指定的token
+        acl-token: 016d7df6-88f6-8833-520c-3e4d7cedbc4a
+        # 服务名 (需要与service_prefix "pro"一致, pro为前缀,才会应用到对应的 policies)
+        # 对应policies中的 service_prefix "pro" {policy = "write" intentions = "write" }
+        service-name: consul-service
+        # 注册健康检查
+        register-health-check: false
+        # 注册服务时使用的标签
+        tags: env=pro
+        # 查询指定标签下的服务
+        default-query-tag: env=pro

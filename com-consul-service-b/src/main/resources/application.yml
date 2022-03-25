@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    # 与Consul的Key/Value的 config/consul-service,dev/data对应
+    active: dev
